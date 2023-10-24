@@ -57,6 +57,7 @@ class MonsterRight(animation.AnimateSprite):
     def forward_left(self):
         if not self.game.check_collision(self, self.game.all_players):
             self.rect.x -= self.velocity
+            self.start_animation()
         # si le monstre est en collision avec le joueur
         else:
             # infliger des dégats
@@ -121,6 +122,7 @@ class MonsterLeft(animation.AnimateSprite):
     def forward_right(self):
         if not self.game.check_collision(self, self.game.all_players):
             self.rect.x += self.velocity
+            self.start_animation()
         # si le monstre est en collision avec le joueur
         else:
             # infliger des dégats

@@ -45,6 +45,7 @@ class Game:
 
         # actualiser la barre de vie du joueur
         self.player.update_health_bar(screen)
+        self.player.update_animation()
 
         # actualiser la barre d'event du jeu
         self.comet_event.update_bar(screen)

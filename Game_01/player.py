@@ -2,12 +2,13 @@ import pygame
 from projectile import Projectile
 from monster import MonsterRight
 from monster import MonsterLeft
+import animation
 
 # Créer une classe qui représente notre joueur
-class Player(pygame.sprite.Sprite):
+class Player(animation.AnimateSprite):
 
     def __init__(self, game):
-        super().__init__()
+        super().__init__("player")
         self.game = game
         self.health = 100
         self.max_health = 100
@@ -18,6 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 400
         self.rect.y = 500
+        self.direction = "left"
 
 
 
@@ -34,17 +36,23 @@ class Player(pygame.sprite.Sprite):
         pygame.draw.rect(surface, (60, 60, 60), [self.rect.x + 50, self.rect.y + 20, self.max_health, 7])
         pygame.draw.rect(surface, (111, 210, 46), [self.rect.x + 50, self.rect.y + 20, self.health, 7])
 
+    def update_animation(self):
+        self.animate()
+
     def launch_projectile_right(self):
         p = Projectile(self)
         p.go_right()
         # créer une nouvelle instance de la classe projectile
         self.all_projectiles.add(p)
+        # démarer l'animation du lancé
+        self.start_animation()
 
     def launch_projectile_left(self):
         p = Projectile(self)
         p.go_left()
         # créer une nouvelle instance de la classe projectile
         self.all_projectiles.add(p)
+        self.start_animation()
 
     def move_right(self):
         if not self.check_collision_with_right_monsters():

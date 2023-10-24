@@ -7,23 +7,33 @@ class AnimateSprite(pygame.sprite.Sprite):
         self.image = pygame.image.load(f"assets/{sprite_name}.png") # = ("assets/" + sprite_name + ".png")
         self.current_image = 0 # commencer l'anim à l'image 0
         self.images = animations.get(sprite_name)
+        self.animation = False
+
+    # def methode pour demarer l'animation
+    def start_animation(self):
+        self.animation = True
 
     # def une methode pour animer le sprite
     def animate(self):
 
-        # passer à l'image suivante
-        self.current_image += 1
+        # verifier si l'animation est activée
+        if self.animation:
 
-        # vérifier si on a atteint la fin de l'animation
-        if self.current_image >= len(self.images):
-            self.current_image = 0
+            # passer à l'image suivante
+            self.current_image += 1
 
-        # modifier l'image précédente par la suivante
-        self.image = self.images[self.current_image]
+            # vérifier si on a atteint la fin de l'animation
+            if self.current_image >= len(self.images):
+                self.current_image = 0
+                # désactivation anim
+                self.animation = False
 
-        # flip the image if the direction is right
-        if self.direction == "right":
-            self.image = pygame.transform.flip(self.image, True, False)
+            # modifier l'image précédente par la suivante
+            self.image = self.images[self.current_image]
+
+            # flip the image if the direction is right
+            if self.direction == "right":
+                self.image = pygame.transform.flip(self.image, True, False)
 
 # def fonction pour charger les images d'un sprite
 def load_animation_images(sprite_name):
@@ -43,5 +53,6 @@ def load_animation_images(sprite_name):
 # definir dico qui va contenir les images chargées de chaque sprite
 # mummy -> [...mummy1.png, ...mummy2.png,...]
 animations = {
-    "mummy": load_animation_images("mummy")
+    "mummy": load_animation_images("mummy"),
+    "player": load_animation_images("player")
 }
