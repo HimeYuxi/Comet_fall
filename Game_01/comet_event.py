@@ -28,11 +28,11 @@ class CometFallEvent:
     def reset_max_comets(self):
         self.max_comets_reached = False
 
-    def comet_fall(self, max_comets=10):
+    def comet_fall(self, max_comets=15):
         # Check if the maximum number of comets has been reached
         if not self.max_comets_reached:
             # Boucle les valeurs entre 1 et 10
-            for i in range(min(max_comets, 10 - len(self.all_comets))):
+            for i in range(min(max_comets, 15 - len(self.all_comets))):
                 # Apparaitre boule de feu
                 comet = Comet(self)
                 self.all_comets.add(comet)

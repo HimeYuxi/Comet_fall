@@ -18,6 +18,7 @@ class MonsterRight(animation.AnimateSprite):
         self.rect.y = 540
         self.rect.x = 1000 + random.randint(0, 300)
         self.velocity = random.randint(1, 3)
+        self.direction = "left"
 
         '''
         if random.choice([True, False]):
@@ -65,10 +66,10 @@ class MonsterRight(animation.AnimateSprite):
 ################################################################
 
 
-class MonsterLeft(pygame.sprite.Sprite):
+class MonsterLeft(animation.AnimateSprite):
 
     def __init__(self, game):
-        super().__init__()
+        super().__init__("mummy")
         self.game = game
         self.health = 100
         self.max_health = 100
@@ -78,8 +79,9 @@ class MonsterLeft(pygame.sprite.Sprite):
         self.image = self.flipped_image
         self.rect = self.image.get_rect()
         self.rect.y = 540
-        self.rect.x = -random.randint(0, 300)
+        self.rect.x = -random.randint(50, 350)
         self.velocity = random.randint(1, 3)
+        self.direction = "right"
 
         '''
         if random.choice([True, False]):
@@ -106,6 +108,9 @@ class MonsterLeft(pygame.sprite.Sprite):
 
                 # appel de la méthode pour essayer de déclencher la PDC
                 self.game.comet_event.attempt_fall()
+
+    def update_animation(self):
+        self.animate()
 
 
     def update_health_bar(self, surface):

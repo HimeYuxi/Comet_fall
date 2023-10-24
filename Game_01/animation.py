@@ -21,6 +21,10 @@ class AnimateSprite(pygame.sprite.Sprite):
         # modifier l'image précédente par la suivante
         self.image = self.images[self.current_image]
 
+        # flip the image if the direction is right
+        if self.direction == "right":
+            self.image = pygame.transform.flip(self.image, True, False)
+
 # def fonction pour charger les images d'un sprite
 def load_animation_images(sprite_name):
     # charger les 24 images de ce sprite dans le dossier correspondant

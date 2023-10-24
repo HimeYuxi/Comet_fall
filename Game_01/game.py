@@ -38,6 +38,7 @@ class Game:
         self.comet_event.reset_percent()
         self.is_playing = False
 
+
     def update(self, screen):
         # appliquer l'image de mon joueur
         screen.blit(self.player.image, self.player.rect)
@@ -57,7 +58,6 @@ class Game:
             self.spawn_monster()
 
 
-
         # récup les projectiles du joueur
         for projectile in self.player.all_projectiles:
             projectile.move()
@@ -69,6 +69,7 @@ class Game:
             elif isinstance(monster, MonsterLeft):
                 monster.forward_right()
             monster.update_health_bar(screen)
+            monster.update_animation()
 
         # les comètes
         for comet in self.comet_event.all_comets:

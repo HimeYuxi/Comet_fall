@@ -11,8 +11,8 @@ class Comet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.velocity = random.randint(3, 5)
         self.rect = self.image.get_rect()
-        self.rect.x = random.randint(0, 800)
-        self.rect.y = - random.randint(0, 800)
+        self.rect.x = random.randint(0, 1000)
+        self.rect.y = - random.randint(0, 1000)
         self.comet_event = comet_event
         self.attack = 20
 
