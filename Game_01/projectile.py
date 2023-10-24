@@ -24,21 +24,24 @@ class Projectile(pygame.sprite.Sprite):
     def remove(self):
         self.player.all_projectiles.remove(self)
 
-    def shoot_right(self):
+    def move(self):
         self.rect.x += self.velocity
         self.rotate()
 
-    def shoot_left(self):
-        self.rect.x -= self.velocity
-        self.rotate()
-
-        # vérifier si le prof collidees with a monster
+        # vérifier si le proj collides with a monster
         for monster in self.player.game.check_collision(self, self.player.game.all_monsters):
             self.remove()
             # infliger des dégats aux monstres
             monster.damage(self.player.attack)
 
         # vérifier si proj n'est plus présent sur l'écran
-        if self.rect.x > 1080:
+        if self.rect.x > 1080 or self.rect.x < 0:
             # supprimer le projectile
             self.remove()
+
+    def go_right(self):
+        self.velocity = +self.velocity
+
+    def go_left(self):
+        self.velocity = -self.velocity
+

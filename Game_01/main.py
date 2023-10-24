@@ -63,12 +63,12 @@ while running:
         elif event.type == pygame.KEYDOWN:
             game.pressed[event.key] = True
 
-            # détécter si la touche espace est enclencgée pour lance projectile
+            # détécter si les touches flèches sont enclenchées pour lancer un projectile
             if event.key == pygame.K_RIGHT:
-                game.player.launch_projectile()
+                game.player.launch_projectile_right()
 
             if event.key == pygame.K_LEFT:
-                game.player.launch_projectile()
+                game.player.launch_projectile_left()
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False

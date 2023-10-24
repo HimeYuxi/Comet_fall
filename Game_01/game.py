@@ -1,7 +1,10 @@
+import random
+
 import pygame.sprite
 
 from player import Player
-from monster import Monster
+from monster import MonsterRight
+from monster import MonsterLeft
 from comet_event import CometFallEvent
 
 # créer une seconde classe qui va représenter notre jeu
@@ -18,13 +21,12 @@ class Game:
         self.comet_event = CometFallEvent(self)
         # groupe de monstres
         self.all_monsters = pygame.sprite.Group()
+        self.monster_spawn_allowed = True
         self.pressed = {}
 
     def start(self):
         self.is_playing = True
-        self.spawn_monster()
-        self.spawn_monster()
-        self.spawn_monster()
+
 
 
     def game_over(self):
@@ -46,17 +48,26 @@ class Game:
         # actualiser la barre d'event du jeu
         self.comet_event.update_bar(screen)
 
+        if self.comet_event.attempt_fall():
+            self.monster_spawn_allowed = False
+        else:
+            self.monster_spawn_allowed = True
+
+        if self.monster_spawn_allowed and not self.comet_event.is_full_loaded():
+            self.spawn_monster()
+
+
+
         # récup les projectiles du joueur
         for projectile in self.player.all_projectiles:
-            if self.pressed.get(pygame.K_RIGHT):
-                projectile.shoot_right()
-
-            if self.pressed.get(pygame.K_LEFT):
-                projectile.shoot_left()
+            projectile.move()
 
         # les streums
         for monster in self.all_monsters:
-            monster.forward()
+            if isinstance(monster, MonsterRight):
+                monster.forward_left()
+            elif isinstance(monster, MonsterLeft):
+                monster.forward_right()
             monster.update_health_bar(screen)
 
         # les comètes
@@ -81,7 +92,11 @@ class Game:
     def check_collision(self, sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
 
-    def spawn_monster(self):
-        monster = Monster(self)
-        self.all_monsters.add(monster)
+    def spawn_monster(self, max_monsters=3):
+        if len(self.all_monsters) < max_monsters:
+            if random.choice([True, False]):
+                monster = MonsterRight(self)
+            else:
+                monster = MonsterLeft(self)
+            self.all_monsters.add(monster)
 

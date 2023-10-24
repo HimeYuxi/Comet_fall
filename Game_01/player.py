@@ -1,5 +1,7 @@
 import pygame
 from projectile import Projectile
+from monster import MonsterRight
+from monster import MonsterLeft
 
 # Créer une classe qui représente notre joueur
 class Player(pygame.sprite.Sprite):
@@ -17,6 +19,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = 400
         self.rect.y = 500
 
+
+
     def damage(self, amount):
         if self.health - amount >= 0:
             self.health -= amount
@@ -30,13 +34,30 @@ class Player(pygame.sprite.Sprite):
         pygame.draw.rect(surface, (60, 60, 60), [self.rect.x + 50, self.rect.y + 20, self.max_health, 7])
         pygame.draw.rect(surface, (111, 210, 46), [self.rect.x + 50, self.rect.y + 20, self.health, 7])
 
-    def launch_projectile(self):
+    def launch_projectile_right(self):
+        p = Projectile(self)
+        p.go_right()
         # créer une nouvelle instance de la classe projectile
-        self.all_projectiles.add(Projectile(self))
+        self.all_projectiles.add(p)
+
+    def launch_projectile_left(self):
+        p = Projectile(self)
+        p.go_left()
+        # créer une nouvelle instance de la classe projectile
+        self.all_projectiles.add(p)
 
     def move_right(self):
-        if not self.game.check_collision(self, self.game.all_monsters):
+        if not self.check_collision_with_right_monsters():
             self.rect.x += self.velocity
 
     def move_left(self):
-        self.rect.x -= self.velocity
+        if not self.check_collision_with_left_monsters():
+            self.rect.x -= self.velocity
+
+    def check_collision_with_right_monsters(self):
+        right_monsters = [monster for monster in self.game.all_monsters if isinstance(monster, MonsterRight)]
+        return self.game.check_collision(self, right_monsters)
+
+    def check_collision_with_left_monsters(self):
+        left_monsters = [monster for monster in self.game.all_monsters if isinstance(monster, MonsterLeft)]
+        return self.game.check_collision(self, left_monsters)

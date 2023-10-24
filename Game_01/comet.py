@@ -1,14 +1,12 @@
 
 import pygame
 import random
-import time
 
 class Comet(pygame.sprite.Sprite):
 
     def __init__(self, comet_event):
         super(Comet, self).__init__()
         # définir l'image de comet
-        self.time = time
         self.image = pygame.image.load("assets/comet.png")
         self.rect = self.image.get_rect()
         self.velocity = random.randint(3, 5)
@@ -25,11 +23,10 @@ class Comet(pygame.sprite.Sprite):
         if len(self.comet_event.all_comets) == 0:
             # remettre la barre à 0
             self.comet_event.reset_percent()
-            pygame.time.wait(1000)
             # réapparition des streums
-            self.comet_event.game.spawn_monster()
-            self.comet_event.game.spawn_monster()
-            self.comet_event.game.spawn_monster()
+            self.comet_event.fall_mode = False
+            self.comet_event.reset_max_comets()
+
 
 
     def fall(self):

@@ -8,9 +8,10 @@ class CometFallEvent:
     # lors du chargement -> créer un compteur
     def __init__(self, game):
         self.percent = 0
-        self.percent_speed = 100
+        self.percent_speed = 10
         self.game = game
         self.fall_mode = False
+        self.max_comets_reached = False
 
         # def grp de sprites pour stocker nos comètes
         self.all_comets = pygame.sprite.Group()
@@ -24,14 +25,23 @@ class CometFallEvent:
     def reset_percent(self):
         self.percent = 0
 
-    def comet_fall(self):
-        # boucle les valeurs entre 1 et 10
-        for i in range(1, 10):
-        # apparaitre boule de feu
-            self.all_comets.add(Comet(self))
+    def reset_max_comets(self):
+        self.max_comets_reached = False
+
+    def comet_fall(self, max_comets=10):
+        # Check if the maximum number of comets has been reached
+        if not self.max_comets_reached:
+            # Boucle les valeurs entre 1 et 10
+            for i in range(min(max_comets, 10 - len(self.all_comets))):
+                # Apparaitre boule de feu
+                comet = Comet(self)
+                self.all_comets.add(comet)
+                # Check if the maximum number of comets has been reached after adding a new comet
+                if len(self.all_comets) >= max_comets:
+                    self.max_comets_reached = True
 
     def attempt_fall(self):
-        # la jauge d'event est chargée
+        # La jauge d'event est chargée
         if self.is_full_loaded() and len(self.game.all_monsters) == 0:
             print("Pluie de comètes !")
             self.comet_fall()
