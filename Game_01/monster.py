@@ -8,15 +8,15 @@ import game
 
 class MonsterRight(animation.AnimateSprite):
 
-    def __init__(self, game):
-        super().__init__("mummy")
+    def __init__(self, game, name, size, offset=0):
+        super().__init__(name, size)
         self.game = game
         self.health = 100
         self.max_health = 100
         self.attack = 0.3
         self.rect = self.image.get_rect()
-        self.rect.y = 540
-        self.rect.x = 1000 + random.randint(0, 300)
+        self.rect.y = 540 - offset
+        self.rect.x = 1200 + random.randint(0, 300)
         self.velocity = random.randint(1, 3)
         self.direction = "left"
 
@@ -69,17 +69,14 @@ class MonsterRight(animation.AnimateSprite):
 
 class MonsterLeft(animation.AnimateSprite):
 
-    def __init__(self, game):
-        super().__init__("mummy")
+    def __init__(self, game, name, size, offset=0):
+        super().__init__(name, size)
         self.game = game
         self.health = 100
         self.max_health = 100
         self.attack = 0.3
-        self.image = pygame.image.load("assets./mummy.png")
-        self.flipped_image = pygame.transform.flip(self.image, True, False)
-        self.image = self.flipped_image
         self.rect = self.image.get_rect()
-        self.rect.y = 540
+        self.rect.y = 540 - offset
         self.rect.x = -random.randint(50, 350)
         self.velocity = random.randint(1, 3)
         self.direction = "right"
@@ -127,3 +124,38 @@ class MonsterLeft(animation.AnimateSprite):
         else:
             # infliger des dégats
             self.game.player.damage(self.attack)
+
+
+################################################################################
+
+# définir une classe pour la momie
+
+class MummyRight(MonsterRight):
+
+    def __init__(self, game):
+        super().__init__(game, "mummy", (130, 130))
+
+class MummyLeft(MonsterLeft):
+
+    def __init__(self, game):
+        super().__init__(game, "mummy",(130,130))
+
+# clase pour l'alien
+
+class AlienRight(MonsterRight):
+
+    def __init__(self, game):
+        super().__init__(game, "alien", (250, 250), 100)
+        self.health = 200
+        self.max_health = 200
+        self.velocity = 1
+        self.attack = 0.8
+
+class AlienLeft(MonsterLeft):
+
+    def __init__(self, game):
+        super().__init__(game, "alien", (250, 250), 100)
+        self.health = 200
+        self.max_health = 200
+        self.velocity = 1
+        self.attack = 0.8

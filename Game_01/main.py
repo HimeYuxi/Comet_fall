@@ -7,7 +7,7 @@ pygame.key.set_repeat(150, 150)
 
 # Générer la fenetre de jeu
 pygame.display.set_caption("Comet fall Game")
-screen = pygame.display.set_mode((1080, 720))
+screen = pygame.display.set_mode((1200, 720))
 
 background = pygame.image.load("assets/bg.jpg")
 
@@ -15,25 +15,26 @@ background = pygame.image.load("assets/bg.jpg")
 banner = pygame.image.load("assets/banner.png")
 banner = pygame.transform.scale(banner, (500, 500))
 banner_rect = banner.get_rect()
-banner_rect.x = math.ceil(screen.get_width() / 4)
+banner_rect.x = math.ceil(screen.get_width() / 3.5)
 
 # import charger un bouton  pour lancer la partie
 play_button = pygame.image.load('assets/button.png')
 play_button = pygame.transform.scale(play_button, (400, 150))
 play_button_rect = play_button.get_rect()
-play_button_rect.x = math.ceil(screen.get_width() / 3.23)
+play_button_rect.x = math.ceil(screen.get_width() / 3)
 play_button_rect.y = math.ceil(screen.get_height() / 2)
 
 # charger notre jeu
 game = Game()
 clock = pygame.time.Clock()
+FPS = 60
 time = time
 running = True
 
 # boucle tant que cette condition est vraie
 while running:
 
-    clock.tick(60)
+    clock.tick(FPS)
 
     # appliquer arrière plan du jeu
     screen.blit(background, (-100, -200))

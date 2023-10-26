@@ -3,8 +3,7 @@ import random
 import pygame.sprite
 
 from player import Player
-from monster import MonsterRight
-from monster import MonsterLeft
+from monster import MonsterRight, MonsterLeft, MummyRight, MummyLeft, AlienRight, AlienLeft
 from comet_event import CometFallEvent
 
 # créer une seconde classe qui va représenter notre jeu
@@ -94,11 +93,18 @@ class Game:
     def check_collision(self, sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
 
-    def spawn_monster(self, max_monsters=3):
+    def spawn_monster(self, max_monsters=4):
         if len(self.all_monsters) < max_monsters:
-            if random.choice([True, False]):
-                monster = MonsterRight(self)
-            else:
-                monster = MonsterLeft(self)
-            self.all_monsters.add(monster)
 
+            monster_types = [
+                (MummyRight, 0.9),
+                (MummyLeft, 0.9),
+                (AlienRight, 0.1),
+                (AlienLeft, 0.1)
+            ]
+
+            chosen_monster_type, probability = random.choices(monster_types)[0]
+
+            if random.random() < probability:  # Check if the random number is less than the probability
+                monster = chosen_monster_type(self)
+                self.all_monsters.add(monster)
