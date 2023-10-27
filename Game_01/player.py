@@ -46,6 +46,7 @@ class Player(animation.AnimateSprite):
         self.all_projectiles.add(p)
         # démarer l'animation du lancé
         self.start_animation()
+        self.game.sound_manager.play("tir")
 
     def launch_projectile_left(self):
         p = Projectile(self)
@@ -53,6 +54,8 @@ class Player(animation.AnimateSprite):
         # créer une nouvelle instance de la classe projectile
         self.all_projectiles.add(p)
         self.start_animation()
+        self.game.sound_manager.play("tir")
+
 
     def move_right(self):
         if not self.check_collision_with_right_monsters():

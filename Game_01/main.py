@@ -75,7 +75,15 @@ while running:
             game.pressed[event.key] = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            # vérificationpour savoir si la souris est en collision avec le bouton play
-            if play_button_rect.collidepoint(event.pos):
+            if game.is_playing == False:
+                # vérificationpour savoir si la souris est en collision avec le bouton play
+                if play_button_rect.collidepoint(event.pos):
+                    # mettre le jeu en mode "lancé"
+                    game.start()
+                    game.sound_manager.play("click")
+
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            if game.is_playing == False:
                 # mettre le jeu en mode "lancé"
                 game.start()
+                game.sound_manager.play("click")

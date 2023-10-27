@@ -18,6 +18,7 @@ class MonsterRight(animation.AnimateSprite):
         self.rect.y = 540 - offset
         self.rect.x = 1200 + random.randint(0, 300)
         self.velocity = random.randint(1, 3)
+        self.loot_amount = 5
         self.direction = "left"
 
         '''
@@ -37,6 +38,8 @@ class MonsterRight(animation.AnimateSprite):
 
         # vérifier si son nouveay nbr d'hp <= 0
         if self.health <= 0:
+            # ajouter score
+            self.game.add_score(self.loot_amount)
 
             if self.game.comet_event.is_full_loaded:
                 # retirer monstre
@@ -79,6 +82,7 @@ class MonsterLeft(animation.AnimateSprite):
         self.rect.y = 540 - offset
         self.rect.x = -random.randint(50, 350)
         self.velocity = random.randint(1, 3)
+        self.loot_amount = 5
         self.direction = "right"
 
         '''
@@ -99,6 +103,8 @@ class MonsterLeft(animation.AnimateSprite):
 
         # vérifier si son nouveay nbr d'hp <= 0
         if self.health <= 0:
+            # ajouter points
+            self.game.add_score(self.loot_amount)
 
             if self.game.comet_event.is_full_loaded:
                 # retirer monstre
@@ -150,6 +156,8 @@ class AlienRight(MonsterRight):
         self.max_health = 200
         self.velocity = 1
         self.attack = 0.8
+        self.loot_amount = 20
+
 
 class AlienLeft(MonsterLeft):
 
@@ -159,3 +167,5 @@ class AlienLeft(MonsterLeft):
         self.max_health = 200
         self.velocity = 1
         self.attack = 0.8
+        self.loot_amount = 20
+        self.rect.x = -random.randint(100, 450)
