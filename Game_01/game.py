@@ -21,6 +21,7 @@ class Game:
         # groupe de monstres
         self.all_monsters = pygame.sprite.Group()
         self.monster_spawn_allowed = True
+        self.score = 0
         self.pressed = {}
 
     def start(self):
@@ -36,9 +37,15 @@ class Game:
         self.player.health = self.player.max_health
         self.comet_event.reset_percent()
         self.is_playing = False
+        self.score = 0
 
 
     def update(self, screen):
+        # afficher le score à l'écran
+        font = pygame.font.SysFont("monospace", 16)
+        score_text = font.render(f"Score : {self.score}", 1, (0, 0, 0))
+        screen.blit(score_text, (20, 20))
+
         # appliquer l'image de mon joueur
         screen.blit(self.player.image, self.player.rect)
 
