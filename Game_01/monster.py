@@ -169,3 +169,6 @@ class AlienLeft(MonsterLeft):
         self.attack = 0.8
         self.loot_amount = 20
         self.rect.x = -random.randint(100, 450)
+
+
+#zfeijgqeiourgoqeuirgn
